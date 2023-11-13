@@ -2,13 +2,10 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Calculator;
+use App\Model;
 
+$calc = new Model();
 
-    if(isset($_POST['send']))
-{
-    $calc = new Calculator($_POST['num1'], $_POST['num2'], $_POST['options']);
-}
 ?>
 
 <!DOCTYPE html>
@@ -21,21 +18,26 @@ use App\Calculator;
 <body>
 
 <div>
+
     <form action="/" method="post">
-        
+
          <input type="number" name="num1" id="">
+
          <select name="options" id="">
             <option value="+">+</option>
             <option value="-">-</option>
             <option value="*">*</option>
             <option value="/">/</option>
          </select>
-         <input type="number" name="num2" id="">
-         <button type="submit" name="send">=</button>
-         <input type="number" placeholder="<?= $calc->start(); ?>">
 
+         <input type="number" name="num2" id="">
+
+         <button type="submit" name="send">=</button>
+
+         <input placeholder="<?=$calc->run(); ?>">
 
     </form>
+
 </div>
     
 </body>
