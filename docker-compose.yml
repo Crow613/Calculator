@@ -10,7 +10,7 @@ services:
     depends_on:
       - app
       - db
-    container_name: new11_web
+    container_name: calc_web
 
   app:
     build:
@@ -21,19 +21,19 @@ services:
        - './:/var/www'
     depends_on:
       - db
-    container_name: new11_app
+    container_name: calc_app
        
   db:
     image: mysql:latest
     ports:
       - "3306:3306"
     volumes:
-      - './tmp/db:/var/lib/mysql'
+      - './:/var/lib/mysql'
     environment:
       MYSQL_DATABASE: test
       MYSQL_ROOT_PASSWORD: root
       restart: always
-    container_name: new11_db
+    container_name: calc_db
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -44,4 +44,4 @@ services:
       - "8081:80"
     depends_on:
       - db
-    container_name: new11_phpmyadmin
+    container_name: calc_phpmyadmin
