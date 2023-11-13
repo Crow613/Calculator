@@ -1,0 +1,47 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+       - './Docker/Nginx/conf.d:/etc/nginx/conf.d'
+       - './:/var/www/'
+    depends_on:
+      - app
+      - db
+    container_name: new11_web
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Docker/Dockerfile
+    volumes:
+       - './Docker/Nginx/PHP/php.ini:/usr/local/etc/php/conf.d/php.ini'
+       - './:/var/www'
+    depends_on:
+      - db
+    container_name: new11_app
+       
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - './tmp/db:/var/lib/mysql'
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: root
+      restart: always
+    container_name: new11_db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    container_name: new11_phpmyadmin
